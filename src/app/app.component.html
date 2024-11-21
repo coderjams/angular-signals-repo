@@ -1,8 +1,16 @@
 <app-header />
 <main>
   <ul id="users">
+    @for(user of users(); track user.id) {
     <li>
-      <app-user />
+      <app-user
+        [id]="user.id"
+        [avatar]="user.avatar"
+        [name]="user.name"
+        (select)="onSelectUser($event)"
+      />
     </li>
+    }
   </ul>
+  {{ userName() }}
 </main>
