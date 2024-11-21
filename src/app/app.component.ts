@@ -1,7 +1,7 @@
-import { Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { Component, signal } from '@angular/core';
 import { HeaderComponent } from './header/header.component';
 import { UserComponent } from './user/user.component';
+import { DUMMY_USERS } from './users-mock';
 
 @Component({
   selector: 'app-root',
@@ -10,4 +10,13 @@ import { UserComponent } from './user/user.component';
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
 })
-export class AppComponent {}
+export class AppComponent {
+  users = signal(DUMMY_USERS);
+  userId = signal('');
+  userName = signal<string>('');
+
+  onSelectUser(id: string) {
+    const selectedUser = this.users().find((user) => user.id === id);
+    this.userName.set(selectedUser?.name ? selectedUser.name : '');
+  }
+}
