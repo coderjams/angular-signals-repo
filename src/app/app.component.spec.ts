@@ -20,18 +20,19 @@ describe('AppComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  // it(`should have the 'basics' title`, () => {
-  //   const fixture = TestBed.createComponent(AppComponent);
-  //   const app = fixture.componentInstance;
-  //   expect(app.title).toEqual('basics');
-  // });
+  describe('onSelectUser', () => {
+    it('should set selected userId', () => {
+      const userId = 'u2';
+      component.onSelectUser(userId);
+      expect(component.selectedUserId()).toEqual(userId);
+    });
+  });
 
-  // it('should render title', () => {
-  //   const fixture = TestBed.createComponent(AppComponent);
-  //   fixture.detectChanges();
-  //   const compiled = fixture.nativeElement as HTMLElement;
-  //   expect(compiled.querySelector('h1')?.textContent).toContain(
-  //     'Hello, basics'
-  //   );
-  // });
+  describe('selectedUser', () => {
+    it('should return selected user', () => {
+      const user = component.users()[1];
+      component.selectedUserId.set(user.id);
+      expect(component.selectedUser()).toEqual(user);
+    });
+  });
 });

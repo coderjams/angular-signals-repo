@@ -12,5 +12,5 @@
     </li>
     }
   </ul>
-  {{ userName() }}
+  <app-tasks [user]="selectedUser()?.name || ''" />
 </main>
