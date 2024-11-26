@@ -2,6 +2,7 @@ import { Component, computed, input, signal } from '@angular/core';
 import { TaskComponent } from './task/task.component';
 import { dummyTasks } from '../tasks-mock';
 import { NewTaskComponent } from './new-task/new-task.component';
+import { NewTask } from '../models/task.model';
 
 @Component({
   selector: 'app-tasks',
@@ -11,8 +12,8 @@ import { NewTaskComponent } from './new-task/new-task.component';
   styleUrl: './tasks.component.scss',
 })
 export class TasksComponent {
-  userId = input<string>();
-  name = input<string>();
+  userId = input.required<string>();
+  name = input.required<string>();
   tasks = signal(dummyTasks);
   newTask = signal<string>('');
   isAddingTask = signal<boolean>(false);
@@ -27,5 +28,26 @@ export class TasksComponent {
   onNewtask() {
     this.isAddingTask.set(true);
     this.newTask.set(this.name()!);
+  }
+
+  onCancelAddTask() {
+    this.isAddingTask.set(false);
+  }
+
+  onAddTask(taskData: NewTask) {
+    console.log(taskData);
+    console.log('before', this.tasks());
+    this.tasks.set([
+      ...this.tasks(),
+      {
+        id: new Date().getTime().toString(),
+        userId: this.userId(),
+        title: taskData.title,
+        summary: taskData.summary,
+        dueDate: taskData.dueDate,
+      },
+    ]);
+    console.log('after', this.tasks());
+    this.isAddingTask.set(false);
   }
 }
